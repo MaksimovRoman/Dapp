@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello World DApp</title>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.3.5/dist/web3.min.js"></script>
+</head>
+<body>
+    <h1>Hello World DApp</h1>
+    <button onclick="sayHello()">Say Hello</button>
+    <p id="hello"></p>
+
+    <script>
+        let web3 = new Web3(Web3.givenProvider || "http://127.0.0.1:7545");
+        let contractAddress = "0xA13C626bd7e862f8152fA681BE6486067FB62ceA"; // Адрес, полученный после развертывания
+        let contractABI = [
+            {
+            "inputs": [],
+            "name": "sayHello",
+            "outputs": [
+                {
+                "internalType": "string",
+                "name": "",
+                "type": "string"
+                }
+            ],
+            "stateMutability": "pure",
+            "type": "function",
+            "constant": true
+            }
+        ] // ABI контракта
+
+        let myContract = new web3.eth.Contract(contractABI, contractAddress);
+
+        async function sayHello() {
+            const result = await myContract.methods.sayHello().call();
+            document.getElementById('hello').innerText = result;
+        }
+    </script>
+</body>
+</html>
